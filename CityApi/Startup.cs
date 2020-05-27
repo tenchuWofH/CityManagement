@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CityApi.Data;
 using CityApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +33,7 @@ namespace CityApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddControllers();
+            services.AddControllers();
 
             //services.AddMvc(setupAction =>
             //{
@@ -94,7 +95,9 @@ namespace CityApi
             // appsettings (note: use this during development; in a production environment,
             // it's better to store the connection string in an environment variable)
             var connectionString = Configuration["ConnectionStrings:CityManagementDB"];
-            services.AddDbContext<CityManagementContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<CityManagementContext>(options => options.UseSqlServer(connectionString)
+                .EnableSensitiveDataLogging()
+            );
 
             // register the repository
             services.AddScoped<ICityManagementRepository, CityManagementRepository>();
@@ -132,7 +135,7 @@ namespace CityApi
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,6 @@
-﻿using CityApi.Models;
+﻿using CityApi.Data;
+using CityApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -72,9 +74,13 @@ namespace CityApi.Services
 
 #pragma warning disable 1998
         // disable async warning - no code 
-        public async Task UpdateCity(City tour)
+        public async Task UpdateCity(City city)
         {
-            // no code in this implementation
+            //var cityExist = await _context.Cities.Where(c => c.CityId == city.CityId).SingleAsync();
+            //if (!cityExist) return NotFoundResult;
+
+            _context.Entry(city).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 #pragma warning restore 1998
 

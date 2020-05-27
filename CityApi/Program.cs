@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CityApi.Data;
 using CityApi.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,8 @@ namespace CityApi
                 try
                 {
                     var context = scope.ServiceProvider.GetService<CityManagementContext>();
-                    context.Database.Migrate();
-                    context.EnsureSeedDataForContext();
+                    //context.Database.Migrate();
+                    context.Initialize();
                 }
                 catch (System.Exception ex)
                 {
