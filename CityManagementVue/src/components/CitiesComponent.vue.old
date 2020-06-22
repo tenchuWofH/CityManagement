@@ -1,0 +1,65 @@
+/* eslint-disable spaced-comment */
+<template>
+  <div>
+    <!-- <p>{{ title }}</p>
+    <ul>
+      <li v-for="city in cities" :key="city.id" @click="increment">
+        {{ city.id }} - {{ city.content }}
+      </li>
+    </ul>
+    <p>Count: {{ cityCount }} / {{ meta.totalCount }}</p>
+    <p>Active: {{ active ? 'yes' : 'no' }}</p>
+    <p>Clicks on cities: {{ clickCount }}</p>
+     -->
+  </div>
+</template>
+
+<script lang="ts">
+import {
+  defineComponent, PropType, // , ref, computed,
+} from '@vue/composition-api';
+//import { City, PointOfInterest } from './models';
+import { City } from './models';
+
+// function useClickCount() {
+//   const clickCount = ref(0);
+//   function increment() {
+//     clickCount.value += 1;
+//     return clickCount.value;
+//   }
+
+//   return { clickCount, increment };
+// }
+
+// function useDisplayCity(cities: City[]) {
+//   const cityCount = computed(() => cities.length);
+//   return { cityCount };
+// }
+// computed: {
+
+// }
+
+export default defineComponent({
+  name: 'CitiesComponent',
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    cities: {
+      type: (Array as unknown) as PropType<City[]>,
+      default: () => [],
+    },
+    // meta: {
+    //   type: (Object as unknown) as PropType<PointOfInterestId>,
+    //   required: true,
+    // },
+    // active: {
+    //   type: Boolean,
+    // },
+  },
+//   setup({ cities }) {
+//     return { ...useClickCount(), ...useDisplayCity(cities) };
+//   },
+});
+</script>
