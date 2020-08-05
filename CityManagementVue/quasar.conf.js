@@ -104,6 +104,13 @@ module.exports = configure((ctx) => ({
     https: false,
     port: 8080,
     open: true, // opens browser window automatically
+    proxy: {
+      '/api': {
+        target: 'https://localhost:44347/', // http://localhost:8888', // target host
+        ws: true, // proxy websockets
+        changeOrigin: true, // needed for virtual hosted sites
+      },
+    },
   },
 
   // animations: 'all', // --- includes all animations

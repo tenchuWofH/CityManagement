@@ -25,7 +25,34 @@
           :data="cities"
           :columns="columns"
           row-key="name"
-        />
+        >
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td key="name" :props="props">
+                {{ props.row.name }}
+                <q-popup-edit v-model="props.row.name">
+                  <q-input v-model="props.row.name" dense autofocus counter />
+                </q-popup-edit>
+              </q-td>
+
+              <q-td key="description" :props="props">
+                {{ props.row.description }}
+                <q-popup-edit
+                  buttons
+                  v-model="props.row.description"
+                >
+                  <q-input
+                    type="textarea"
+                    v-model="props.row.description"
+                    autofocus
+                    counter
+                    @keyup.enter.stop
+                  />
+                </q-popup-edit>
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
       </div>
     </q-page-container>
 
@@ -33,34 +60,37 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+// import Vue from 'vue';
 // import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Component, Vue } from 'vue-property-decorator';
 
 // import CityDetail from './CityDetail.vue';
 import { cityService } from '../services/cityService';
-import { City } from './models';
+import { City } from '../models/models';
 
 @Component({
   // components: { CityDetail }
 })
 export default class CityList extends Vue {
   // addingCity = false;
-  // selectedCity: City | null = null;
+  selectedCity: City | null = null;
+
   cities: City[] = [];
+
   // private columns: any[] = [];
-  columns: [
-      {
-        name: 'name',
-        required: true,
-        label: 'Name',
-        align: 'left',
-        field: 'name',//row => row.name,
-        // format: val => `${val}`,
-        sortable: true
-      },
-      { name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true }
-    ];
+
+  columns: unknown[] = [
+    {
+      name: 'name',
+      required: true,
+      label: 'Name',
+      align: 'left',
+      field: 'name',//row => row.name,
+      // format: val => `${val}`,
+      sortable: true,
+    },
+    { name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true }
+  ];
 
   // cities(){
   //   return _cities;
@@ -102,7 +132,7 @@ export default class CityList extends Vue {
   // }
 
   getCities() {
-    this.cities = [];
+    // this.cities = [];
     this.selectedCity = null;
     // return cityService.getCities().then((response) => (this.cities = response.data));
     cityService.getCities()

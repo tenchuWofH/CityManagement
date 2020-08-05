@@ -23,6 +23,8 @@ namespace CityApi
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,6 +35,19 @@ namespace CityApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins().AllowAnyOrigin()
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod()
+                                        .WithOrigins("http://localhost:8080");
+                });
+            });
+
+            
             services.AddControllers();
 
             //services.AddMvc(setupAction =>
@@ -85,11 +100,11 @@ namespace CityApi
 
             // Configure CORS so the API allows requests from JavaScript.  
             // For demo purposes, all origins/headers/methods are allowed.  
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOriginsHeadersAndMethods",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowAllOriginsHeadersAndMethods",
+            //        builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            //});
 
             // register the DbContext on the container, getting the connection string from
             // appsettings (note: use this during development; in a production environment,
@@ -131,6 +146,11 @@ namespace CityApi
                 });
             }
 
+            // Enable CORS
+            ////app.UseCors("AllowAllOriginsHeadersAndMethods");
+            //app.UseCors(option => option.AllowAnyOrigin());
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -169,8 +189,6 @@ namespace CityApi
 
             //});
 
-            // Enable CORS
-            app.UseCors("AllowAllOriginsHeadersAndMethods");
             //app.UseMvc();
         }
     }

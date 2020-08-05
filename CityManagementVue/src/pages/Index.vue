@@ -13,7 +13,7 @@
 import Vue from 'vue';
 
 import ExampleComponent from 'components/CompositionComponent.vue';
-import { Todo, Meta } from 'components/models';
+import { Todo, Meta } from '../models/models';
 
 export default Vue.extend({
   name: 'PageIndex',
