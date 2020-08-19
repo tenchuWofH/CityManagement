@@ -1,6 +1,5 @@
+/* eslint-disable max-len */
 /* eslint-disable no-console */
-/* eslint-disable no-console */
-/* eslint-disable no-return-assign */
 /* eslint-disable no-return-assign */
 <template>
   <q-layout view="hHh lpR fFf">
@@ -54,6 +53,14 @@
           </template>
         </q-table>
       </div>
+
+      <q-btn
+        flat
+        dense
+        round
+        icon="menu"
+        aria-label="Menu"
+      />
     </q-page-container>
 
   </q-layout>
@@ -85,11 +92,14 @@ export default class CityList extends Vue {
       required: true,
       label: 'Name',
       align: 'left',
-      field: 'name',//row => row.name,
+      field: 'name', // row => row.name,
       // format: val => `${val}`,
       sortable: true,
     },
-    { name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true }
+    {
+      // eslint-disable-next-line comma-dangle
+      name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true
+    },
   ];
 
   // cities(){
@@ -111,7 +121,10 @@ export default class CityList extends Vue {
   //       format: val => `${val}`,
   //       sortable: true
   //     },
-  //     { name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true }
+  //     {
+  // eslint-disable-next-line max-len
+  //      name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true
+  //    },
   //   ],
   // }
 
@@ -163,7 +176,7 @@ export default class CityList extends Vue {
   }
 
   unselect() {
-    this.addingCity = false;
+    // this.addingCity = false;
     this.selectedCity = null;
   }
 }
