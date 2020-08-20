@@ -1,3 +1,5 @@
+/* TODO: ajustar colunas de edit e delete */
+
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 /* eslint-disable no-return-assign */
@@ -10,7 +12,7 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
           </q-avatar>
-          Title
+          Cities
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -27,6 +29,25 @@
         >
           <template v-slot:body="props">
             <q-tr :props="props">
+              <q-td>
+                <q-btn
+                  flat
+                  dense
+                  round
+                  icon="edit"
+                  aria-label="Menu"
+                />
+              </q-td>
+              <q-td>
+                <q-btn
+                  flat
+                  dense
+                  round
+                  icon="delete"
+                  aria-label="Menu"
+                />
+              </q-td>
+
               <q-td key="name" :props="props">
                 {{ props.row.name }}
                 <q-popup-edit v-model="props.row.name">
@@ -50,17 +71,17 @@
                 </q-popup-edit>
               </q-td>
             </q-tr>
+            <!-- <button class="primary clear" @click="editCity">
+              <i>edit</i>
+            </button>
+            <button class="primary clear" @click="deleteCity">
+              <i>delete</i>
+            </button> -->
           </template>
         </q-table>
       </div>
 
-      <q-btn
-        flat
-        dense
-        round
-        icon="menu"
-        aria-label="Menu"
-      />
+
     </q-page-container>
 
   </q-layout>
@@ -88,6 +109,16 @@ export default class CityList extends Vue {
 
   columns: unknown[] = [
     {
+      name: 'edit',
+      align: 'left',
+      width: '3px',
+    },
+    {
+      name: 'delete',
+      align: 'left',
+      width: '3px',
+    },
+    {
       name: 'name',
       required: true,
       label: 'Name',
@@ -95,10 +126,16 @@ export default class CityList extends Vue {
       field: 'name', // row => row.name,
       // format: val => `${val}`,
       sortable: true,
+      width: '50px',
     },
     {
       // eslint-disable-next-line comma-dangle
-      name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true
+      name: 'description',
+      align: 'left',
+      label: 'Description',
+      field: 'description',
+      sortable: true,
+      width: '200px',
     },
   ];
 
@@ -170,6 +207,14 @@ export default class CityList extends Vue {
   //     });
   //   }
   // }
+
+  editCity() {
+
+  }
+
+  deleteCity() {
+
+  }
 
   onSelect(city: City) {
     this.selectedCity = city;
