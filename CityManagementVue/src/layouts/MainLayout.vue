@@ -102,6 +102,12 @@ export default {
           icon: 'favorite',
           link: 'https://awesome.quasar.dev',
         },
+        {
+          title: 'Cities',
+          caption: 'Cities List',
+          icon: 'location_city',
+          link: '/#/cities',
+        },
       ],
     };
   },

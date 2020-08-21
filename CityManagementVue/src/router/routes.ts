@@ -9,7 +9,13 @@ const routes: RouteConfig[] = [
   {
     path: '/cities',
     name: 'cities',
-    component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CitiesList.vue'),
+    component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityList.vue'),
+  },
+  ,
+  {
+    path: '/cityEdit/:id',
+    name: 'editCity',
+    component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityEdit.vue'),
   },
 ];
 

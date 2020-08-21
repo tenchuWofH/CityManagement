@@ -29,25 +29,6 @@
         >
           <template v-slot:body="props">
             <q-tr :props="props">
-              <q-td>
-                <q-btn
-                  flat
-                  dense
-                  round
-                  icon="edit"
-                  aria-label="Menu"
-                />
-              </q-td>
-              <q-td>
-                <q-btn
-                  flat
-                  dense
-                  round
-                  icon="delete"
-                  aria-label="Menu"
-                />
-              </q-td>
-
               <q-td key="name" :props="props">
                 {{ props.row.name }}
                 <q-popup-edit v-model="props.row.name">
@@ -70,13 +51,36 @@
                   />
                 </q-popup-edit>
               </q-td>
+
+              <q-td key="actions" :props="props">
+                <q-btn
+                  flat
+                  dense
+                  round
+                  icon="edit"
+                  aria-label="Edit"
+                  @click="editCity(props.row)"
+                />
+                <!-- <q-btn
+                  flat
+                  dense
+                  round
+                  icon="edit"
+                  aria-label="Edit"
+                  type="a"
+                  @click="$router.replace('/cityEdit/'+props.row.id)"
+                /> -->
+                <q-btn
+                  flat
+                  dense
+                  round
+                  icon="delete"
+                  aria-label="Delete"
+                  @click="deleteCity(props.row)"
+                />
+              </q-td>
+
             </q-tr>
-            <!-- <button class="primary clear" @click="editCity">
-              <i>edit</i>
-            </button>
-            <button class="primary clear" @click="deleteCity">
-              <i>delete</i>
-            </button> -->
           </template>
         </q-table>
       </div>
@@ -109,14 +113,10 @@ export default class CityList extends Vue {
 
   columns: unknown[] = [
     {
-      name: 'edit',
-      align: 'left',
-      width: '3px',
-    },
-    {
-      name: 'delete',
-      align: 'left',
-      width: '3px',
+      name: 'actions',
+      align: 'right',
+      width: '5px',
+      field: 'actions',
     },
     {
       name: 'name',
@@ -139,47 +139,9 @@ export default class CityList extends Vue {
     },
   ];
 
-  // cities(){
-  //   return _cities;
-  // }
-
-  // columns(){
-  //   return _columns;
-  // }
-
-  // data(){
-  //   columns: [
-  //     {
-  //       name: 'name',
-  //       required: true,
-  //       label: 'Name',
-  //       align: 'left',
-  //       field: 'name',//row => row.name,
-  //       format: val => `${val}`,
-  //       sortable: true
-  //     },
-  //     {
-  // eslint-disable-next-line max-len
-  //      name: 'description', align: 'center', label: 'Description', field: 'description', sortable: true
-  //    },
-  //   ],
-  // }
-
   created() {
     this.getCities();
   }
-  // deleteCity(city: City) {
-  //   return cityService.deleteCity(city).then(() => {
-  //     this.cities = this.cities.filter(h => h !== city);
-  //     if (this.selectedCity === city) {
-  //       this.selectedCity = null;
-  //     }
-  //   });
-  // }
-  // enableAddMode() {
-  //   this.addingCity = true;
-  //   this.selectedCity = null;
-  // }
 
   getCities() {
     // this.cities = [];
@@ -196,24 +158,20 @@ export default class CityList extends Vue {
         console.log(e);
       });
   }
-  // cityChanged(mode: string, city: City) {
-  //   console.log('city changed', city);
-  //   if (mode === 'add') {
-  //     cityService.addCity(city).then(() => this.cities.push(city));
-  //   } else {
-  //     cityService.updateCity(city).then(() => {
-  //       let index = this.cities.findIndex(h => city.id === h.id);
-  //       this.cities.splice(index, 1, city);
-  //     });
-  //   }
-  // }
 
-  editCity() {
-
+  // https://codepen.io/mickey58/pen/eYYVqWv (Quasar QTable: Editing with QPopupEdits and QButtons to add/delete/update rows)
+  // https://forum.quasar-framework.org/topic/381/solved-action-button-in-datatable/6
+  editCity(city: City) {
+    // this.editedIndex = this.cities.indexOf(city);
+    // this.editedItem = Object.assign({}, city);
+    // this.show_dialog = true;
+    this.onSelect(city);
+    this.$router.push({ name: 'editCity', params: { cityId: this.selectedCity.cityId } });
   }
 
-  deleteCity() {
-
+  deleteCity(city: City) {
+    const index = this.cities.indexOf(city);
+      confirm('Are you sure you want to delete this City?') && this.cities.splice(index, 1);
   }
 
   onSelect(city: City) {
