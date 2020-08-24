@@ -28,9 +28,9 @@
           >
             <q-input
               filled
-              v-model="name"
-              label="Your name *"
-              hint="Name and surname"
+              v-model="this.currentCity.name"
+              label="City name *"
+              hint="City name"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
@@ -38,16 +38,14 @@
             <q-input
               filled
               type="number"
-              v-model="age"
-              label="Your age *"
+              v-model="this.currentCity.description"
+              label="City description *"
+              hint="City description"
               lazy-rules
-              :rules="[
-                val => val !== null && val !== '' || 'Please type your age',
-                val => val > 0 && val < 100 || 'Please type a real age'
-              ]"
+              :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
 
-            <q-toggle v-model="accept" label="I accept the license and terms" />
+            <!-- <q-toggle v-model="accept" label="I accept the license and terms" /> -->
 
             <div>
               <q-btn label="Submit" type="submit" color="primary"/>
@@ -58,73 +56,42 @@
         </div>
       </div>
 
-
     </q-page-container>
 
   </q-layout>
 </template>
 
 <script lang="ts">
-// import Vue from 'vue';
-// import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Component, Vue } from 'vue-property-decorator';
-import { Router } from 'vue-router';
+import { Component, Prop, /* Watch, */ Vue } from 'vue-property-decorator';
 
-
-// import CityDetail from './CityDetail.vue';
 import { cityService } from '../services/cityService';
 import { City } from '../models/models';
 
 @Component({
   // components: { CityDetail }
 })
-export default class CityList extends Vue {
+export default class CityEdit extends Vue {
   // addingCity = false;
-  selectedCity: City | null = null;
+  // currentCity: City || null = null;
+  // addingCity = false;
+  // currentCity: City || null = null;
+  currentCity!: City;
 
-  cities: City[] = [];
-
-  // private columns: any[] = [];
-
-  columns: unknown[] = [
-    {
-      name: 'actions',
-      align: 'right',
-      width: '5px',
-      field: 'actions',
-    },
-    {
-      name: 'name',
-      required: true,
-      label: 'Name',
-      align: 'left',
-      field: 'name', // row => row.name,
-      // format: val => `${val}`,
-      sortable: true,
-      width: '50px',
-    },
-    {
-      // eslint-disable-next-line comma-dangle
-      name: 'description',
-      align: 'left',
-      label: 'Description',
-      field: 'description',
-      sortable: true,
-      width: '200px',
-    },
-  ];
+  // https://medium.com/@toastui/developing-vue-components-with-typescript-18357ae7f297
+  // https://www.digitalocean.com/community/tutorials/vuejs-typescript-class-components
+  // public cityToEdit!: City;// | null = null;
+  @Prop({ default: ({}), required: true })
+  public cityToEdit: City;
 
   created() {
-    this.getCities();
+    this.getCity(this.cityToEdit.cityId);
   }
 
-  getCities() {
-    // this.cities = [];
-    this.selectedCity = null;
-    // return cityService.getCities().then((response) => (this.cities = response.data));
-    cityService.getCities()
+  getCity(cityId: number) {
+    // this.currentCity = null;
+    cityService.getCity(cityId)
       .then((response) => {
-        this.cities = response.data;
+        this.currentCity = response.data;
         // eslint-disable-next-line no-console
         console.log(response.data);
       })
@@ -134,26 +101,29 @@ export default class CityList extends Vue {
       });
   }
 
-  // // https://codepen.io/mickey58/pen/eYYVqWv (Quasar QTable: Editing with QPopupEdits and QButtons to add/delete/update rows)
-  // editCity(city: City) {
-  //   // this.editedIndex = this.cities.indexOf(city);
-  //   // this.editedItem = Object.assign({}, city);
-  //   // this.show_dialog = true;
-    
+  // data() {
+  //   return {
+  //     currentCity: { ...this.cityToEdit },
+  //   };
   // }
 
-  // deleteCity(city: City) {
-  //   const index = this.cities.indexOf(city);
-  //     confirm('Are you sure you want to delete this City?') && this.cities.splice(index, 1);
+  // @Watch('currentCity')
+  // onPropertyChanged(value: City, oldValue: City) {
+  //   this.currentCity = this.currentCity;
   // }
 
-  onSelect(city: City) {
-    this.selectedCity = city;
+  public onSubmit() {
+    this.$q.notify({
+      color: 'green-4',
+      textColor: 'white',
+      icon: 'cloud_done',
+      message: 'Submitted',
+    });
   }
 
-  unselect() {
-    // this.addingCity = false;
-    this.selectedCity = null;
+  public onReset() {
+    this.currentCity.name = '';
+    this.currentCity.description = '';
   }
 }
 </script>

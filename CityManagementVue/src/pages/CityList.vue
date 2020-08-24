@@ -85,7 +85,6 @@
         </q-table>
       </div>
 
-
     </q-page-container>
 
   </q-layout>
@@ -94,7 +93,7 @@
 <script lang="ts">
 // import Vue from 'vue';
 // import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 // import CityDetail from './CityDetail.vue';
 import { cityService } from '../services/cityService';
@@ -104,14 +103,15 @@ import { City } from '../models/models';
   // components: { CityDetail }
 })
 export default class CityList extends Vue {
-  // addingCity = false;
-  selectedCity: City | null = null;
+  // @Prop({ default: {} })
+  // public selectedCity: City|null = null;
 
-  cities: City[] = [];
+  // @Prop({ default: [] })
+  public cities: City[] = [];
 
   // private columns: any[] = [];
-
-  columns: unknown[] = [
+  // @Prop({ default: [] })
+  public columns: unknown[] = [
     {
       name: 'actions',
       align: 'right',
@@ -145,7 +145,7 @@ export default class CityList extends Vue {
 
   getCities() {
     // this.cities = [];
-    this.selectedCity = null;
+    // this.selectedCity = null;
     // return cityService.getCities().then((response) => (this.cities = response.data));
     cityService.getCities()
       .then((response) => {
@@ -162,25 +162,31 @@ export default class CityList extends Vue {
   // https://codepen.io/mickey58/pen/eYYVqWv (Quasar QTable: Editing with QPopupEdits and QButtons to add/delete/update rows)
   // https://forum.quasar-framework.org/topic/381/solved-action-button-in-datatable/6
   editCity(city: City) {
-    // this.editedIndex = this.cities.indexOf(city);
-    // this.editedItem = Object.assign({}, city);
-    // this.show_dialog = true;
-    this.onSelect(city);
-    this.$router.push({ name: 'editCity', params: { cityId: this.selectedCity.cityId } });
+    // // this.editedIndex = this.cities.indexOf(city);
+    // // this.editedItem = Object.assign({}, city);
+    // // this.show_dialog = true;
+    // this.onSelect(city);
+    // this.$router.push({ name: 'editCity', params: { cityId: this.selectedCity.cityId } });
+    // // this.$router.push({ name: 'editCity', params: { cityToEdit: this.selectedCity } });
+
+    this.$router.push({ name: 'editCity', params: { cityId: city.cityId } });
   }
 
   deleteCity(city: City) {
     const index = this.cities.indexOf(city);
-      confirm('Are you sure you want to delete this City?') && this.cities.splice(index, 1);
+    // eslint-disable-next-line no-alert
+    // eslint-disable-next-line no-unused-expressions
+    // eslint-disable-next-line no-restricted-globals
+    confirm('Are you sure you want to delete this City?') && this.cities.splice(index, 1);
   }
 
-  onSelect(city: City) {
-    this.selectedCity = city;
-  }
+  // onSelect(city: City) {
+  //   this.selectedCity = city;
+  // }
 
-  unselect() {
-    // this.addingCity = false;
-    this.selectedCity = null;
-  }
+  // unselect() {
+  //   // this.addingCity = false;
+  //   this.selectedCity = null;
+  // }
 }
 </script>

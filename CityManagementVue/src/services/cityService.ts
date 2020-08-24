@@ -24,6 +24,12 @@ class CityService {
     return http.get<City[]>('/city');
   }
 
+  getCity(cityId: number) {
+    // // return axios.get<City[]>(`${baseUrl}/cities`);
+    // return axios.get<City[]>(`${baseUrl}/city`);
+    return http.get<City>(`/city/${cityId}`);
+  }
+
   addCity(city: City) {
     // return axios.post(`${baseUrl}/city/`, { city });
     return http.post('/city/', { city });

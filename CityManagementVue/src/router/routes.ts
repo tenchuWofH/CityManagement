@@ -1,5 +1,8 @@
 import { RouteConfig } from 'vue-router';
 
+// eslint-disable-next-line radix
+const parseProps = r => ({ cityId: parseInt(r.params.cityId) });
+
 const routes: RouteConfig[] = [
   {
     path: '/',
@@ -11,10 +14,11 @@ const routes: RouteConfig[] = [
     name: 'cities',
     component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityList.vue'),
   },
-  ,
   {
-    path: '/cityEdit/:id',
+    path: '/cityEdit/:cityId',
     name: 'editCity',
+    // props: true,
+    props: parseProps,
     component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityEdit.vue'),
   },
 ];
