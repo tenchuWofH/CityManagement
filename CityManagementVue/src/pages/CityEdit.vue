@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 /* eslint-disable no-return-assign */
@@ -28,6 +30,7 @@
           >
             <q-input
               filled
+              type="string"
               v-model="this.currentCity.name"
               label="City name *"
               hint="City name"
@@ -37,7 +40,7 @@
 
             <q-input
               filled
-              type="number"
+              type="string"
               v-model="this.currentCity.description"
               label="City description *"
               hint="City description"
@@ -62,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, /* Watch, */ Vue } from 'vue-property-decorator';
+import { Component, Prop, Watch, Vue, Emit } from 'vue-property-decorator';
 
 import { cityService } from '../services/cityService';
 import { City } from '../models/models';
@@ -75,21 +78,26 @@ export default class CityEdit extends Vue {
   // currentCity: City || null = null;
   // addingCity = false;
   // currentCity: City || null = null;
-  currentCity!: City;
+  // public currentCity?: City;
+  // @Prop()
+  private currentCity: [] = [];
 
   // https://medium.com/@toastui/developing-vue-components-with-typescript-18357ae7f297
   // https://www.digitalocean.com/community/tutorials/vuejs-typescript-class-components
   // public cityToEdit!: City;// | null = null;
-  @Prop({ default: ({}), required: true })
-  public cityToEdit: City;
+  // @Prop({ default: ({}), required: true })
+  // public cityToEdit: City;
+  @Prop({ required: true })
+  public cityId!: number;
 
-  created() {
-    this.getCity(this.cityToEdit.cityId);
+  async created() {
+    // this.currentCity = null;
+     await this.getCity(this.cityId);
   }
 
-  getCity(cityId: number) {
+  async getCity(cityId: number) {
     // this.currentCity = null;
-    cityService.getCity(cityId)
+    await cityService.getCity(cityId)
       .then((response) => {
         this.currentCity = response.data;
         // eslint-disable-next-line no-console
@@ -108,8 +116,23 @@ export default class CityEdit extends Vue {
   // }
 
   // @Watch('currentCity')
-  // onPropertyChanged(value: City, oldValue: City) {
-  //   this.currentCity = this.currentCity;
+  // onCityChanged(value: string, oldValue: string) {
+  //   this.currentCity = this.cloneIt();
+  // }
+
+  // cloneIt() {
+  //   // return Object.assign({}, this.currentCity);
+  //   return { ...this.currentCity };
+  // }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
+  // @Emit('cityChanged') emitRefresh(mode: string, city: City) {
+  //   this.clear();
+  // }
+
+  // @Emit('unselect') clear() {
+  //   this.currentCity = null;
   // }
 
   public onSubmit() {

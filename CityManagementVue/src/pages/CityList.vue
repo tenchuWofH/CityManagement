@@ -93,7 +93,7 @@
 <script lang="ts">
 // import Vue from 'vue';
 // import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component/* , Prop */, Vue } from 'vue-property-decorator';
 
 // import CityDetail from './CityDetail.vue';
 import { cityService } from '../services/cityService';
@@ -139,15 +139,15 @@ export default class CityList extends Vue {
     },
   ];
 
-  created() {
-    this.getCities();
+  async created() {
+    await this.getCities();
   }
 
-  getCities() {
+  async getCities() {
     // this.cities = [];
     // this.selectedCity = null;
     // return cityService.getCities().then((response) => (this.cities = response.data));
-    cityService.getCities()
+    await cityService.getCities()
       .then((response) => {
         this.cities = response.data;
         // eslint-disable-next-line no-console
@@ -169,7 +169,8 @@ export default class CityList extends Vue {
     // this.$router.push({ name: 'editCity', params: { cityId: this.selectedCity.cityId } });
     // // this.$router.push({ name: 'editCity', params: { cityToEdit: this.selectedCity } });
 
-    this.$router.push({ name: 'editCity', params: { cityId: city.cityId } });
+    const id = city.cityId.toString();
+    this.$router.push({ name: 'editCity', params: { cityId: id } });
   }
 
   deleteCity(city: City) {
@@ -177,7 +178,11 @@ export default class CityList extends Vue {
     // eslint-disable-next-line no-alert
     // eslint-disable-next-line no-unused-expressions
     // eslint-disable-next-line no-restricted-globals
-    confirm('Are you sure you want to delete this City?') && this.cities.splice(index, 1);
+    // confirm('Are you sure you want to delete this City?') && this.cities.splice(index, 1);
+    // eslint-disable-next-line no-alert
+    if (confirm('Are you sure you want to delete this City?')) {
+      this.cities.splice(index, 1);
+    }
   }
 
   // onSelect(city: City) {
