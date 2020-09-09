@@ -7,20 +7,23 @@ const routes: RouteConfig[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/Index.vue') }],
+    children: [
+      { path: '', component: () => import('pages/Index.vue') },
+      { path: '/cities', component: () => import('pages/CityList.vue') },
+    ],
   },
-  {
-    path: '/cities',
-    name: 'cities',
-    component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityList.vue'),
-  },
-  {
-    path: '/cityEdit/:cityId',
-    name: 'editCity',
-    // props: true,
-    props: parseProps,
-    component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityEdit.vue'),
-  },
+  // {
+  //   path: '/cities',
+  //   name: 'cities',
+  //   component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityList.vue'),
+  // },
+  // {
+  //   path: '/cityEdit/:cityId',
+  //   name: 'editCity',
+  //   // props: true,
+  //   props: parseProps,
+  //   component: () => import(/* webpackChunkName: "bundle.heroes" */ 'pages/CityEdit.vue'),
+  // },
 ];
 
 // Always leave this as last one

@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Vue, Emit } from 'vue-property-decorator';
+import { Component, Prop, /* Watch , */ Vue /* , Emit */ } from 'vue-property-decorator';
 
 import { cityService } from '../services/cityService';
 import { City } from '../models/models';

@@ -14,6 +14,15 @@
           </q-avatar>
           Cities
         </q-toolbar-title>
+
+        <q-btn
+          flat
+          dense
+          round
+          icon="add"
+          @click="openCityNew()"
+        />
+
       </q-toolbar>
     </q-header>
 
@@ -84,7 +93,7 @@
           </template>
         </q-table>
       </div>
-
+      <CityNew />
     </q-page-container>
 
   </q-layout>
@@ -96,11 +105,12 @@
 import { Component/* , Prop */, Vue } from 'vue-property-decorator';
 
 // import CityDetail from './CityDetail.vue';
+import { CityNew } from '../components/CityNew';
 import { cityService } from '../services/cityService';
 import { City } from '../models/models';
 
 @Component({
-  // components: { CityDetail }
+  components: { CityNew },
 })
 export default class CityList extends Vue {
   // @Prop({ default: {} })
@@ -183,6 +193,10 @@ export default class CityList extends Vue {
     if (confirm('Are you sure you want to delete this City?')) {
       this.cities.splice(index, 1);
     }
+  }
+
+  openCityNew() {
+    this.showDialog = true;
   }
 
   // onSelect(city: City) {

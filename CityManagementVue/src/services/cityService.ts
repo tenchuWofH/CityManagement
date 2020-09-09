@@ -19,9 +19,10 @@ class CityService {
   }
 
   getCities() {
-    // // return axios.get<City[]>(`${baseUrl}/cities`);
-    // return axios.get<City[]>(`${baseUrl}/city`);
+    // // // return axios.get<City[]>(`${baseUrl}/cities`);
+    // // return axios.get<City[]>(`${baseUrl}/city`);
     return http.get<City[]>('/city');
+    // return http.get<City[]>('');
   }
 
   getCity(cityId: number) {
