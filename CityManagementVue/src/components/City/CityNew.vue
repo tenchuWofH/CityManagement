@@ -40,7 +40,7 @@
       </div>
   </q-page> -->
   <!-- <q-modal v-model="opened" :content-css="{minWidth: '80vw', minHeight: '80vh'}"> -->
-  <q-modal v-model="show_dialog" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+  <q-modal v-model="showDialog" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
   <q-modal-layout>
     <q-toolbar slot="header">
       <q-btn

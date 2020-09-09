@@ -1,7 +1,7 @@
 import { RouteConfig } from 'vue-router';
 
 // eslint-disable-next-line radix
-const parseProps = r => ({ cityId: parseInt(r.params.cityId) });
+// const parseProps = r => ({ cityId: parseInt(r.params.cityId) });
 
 const routes: RouteConfig[] = [
   {
@@ -9,7 +9,7 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      { path: '/cities', component: () => import('pages/CityList.vue') },
+      { path: '/cities', component: () => import('pages/City.vue') },
     ],
   },
   // {

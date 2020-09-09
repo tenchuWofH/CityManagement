@@ -67,8 +67,10 @@
 <script lang="ts">
 import { Component, Prop, /* Watch , */ Vue /* , Emit */ } from 'vue-property-decorator';
 
-import { cityService } from '../services/cityService';
-import { City } from '../models/models';
+import { City } from '../../models/models';
+// import { cityService } from './.@/services/CityDataService.vue';
+import { cityService } from '../../services/CityDataService';
+// import cityService from '*.vue';
 
 @Component({
   // components: { CityDetail }
@@ -80,7 +82,7 @@ export default class CityEdit extends Vue {
   // currentCity: City || null = null;
   // public currentCity?: City;
   // @Prop()
-  private currentCity: [] = [];
+  private currentCity!: City;
 
   // https://medium.com/@toastui/developing-vue-components-with-typescript-18357ae7f297
   // https://www.digitalocean.com/community/tutorials/vuejs-typescript-class-components
@@ -92,18 +94,18 @@ export default class CityEdit extends Vue {
 
   async created() {
     // this.currentCity = null;
-     await this.getCity(this.cityId);
+    await this.getCity(this.cityId);
   }
 
   async getCity(cityId: number) {
     // this.currentCity = null;
     await cityService.getCity(cityId)
-      .then((response) => {
+      .then((response: { data: City }) => {
         this.currentCity = response.data;
         // eslint-disable-next-line no-console
         console.log(response.data);
       })
-      .catch((e) => {
+      .catch((e: any) => {
         // eslint-disable-next-line no-console
         console.log(e);
       });
