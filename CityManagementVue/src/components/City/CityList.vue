@@ -45,8 +45,11 @@
               round
               icon="edit"
               aria-label="Edit"
-              @click="editCity(props.row)"
             />
+            <q-popup-edit
+              v-model="props.row.cityId"
+            >
+            </q-popup-edit>
             <q-btn
               flat
               dense

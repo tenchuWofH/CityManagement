@@ -1,6 +1,20 @@
+<!-- TODO: resize Dialog -->
 <template>
-  <!-- <q-page padding>
-    <div class="q-pa-md">
+  <q-page padding>
+    <q-layout view="hHh lpR fFf">
+
+      <q-header elevated class="bg-primary text-white">
+        <q-toolbar>
+          <q-toolbar-title>
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+            </q-avatar>
+            New City
+          </q-toolbar-title>
+        </q-toolbar>
+      </q-header>
+
+      <div class="q-pa-md">
         <div class="q-pa-md" style="max-width: 400px">
 
           <q-form
@@ -11,7 +25,7 @@
             <q-input
               filled
               type="string"
-              v-model="this.currentCity.name"
+              v-model="newCity.name"
               label="City name *"
               hint="City name"
               lazy-rules
@@ -21,14 +35,14 @@
             <q-input
               filled
               type="string"
-              v-model="this.currentCity.description"
+              v-model="newCity.description"
               label="City description *"
               hint="City description"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
 
-            <q-toggle v-model="this.currentCity.isCapital" label="Capital?" />
+            <q-toggle v-model="newCity.isCapital" label="Capital?" />
 
             <div>
               <q-btn label="Submit" type="submit" color="primary"/>
@@ -38,54 +52,56 @@
 
         </div>
       </div>
-  </q-page> -->
-  <!-- <q-modal v-model="opened" :content-css="{minWidth: '80vw', minHeight: '80vh'}"> -->
-  <q-modal v-model="showDialog" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
-  <q-modal-layout>
-    <q-toolbar slot="header">
-      <q-btn
-        flat
-        round
-        dense
-        v-close-overlay
-        icon="keyboard_arrow_left"
-      />
-      <q-toolbar-title>
-        Header
-      </q-toolbar-title>
-    </q-toolbar>
+    </q-layout>
+  </q-page>
 
-    <q-toolbar slot="header">
-      <!-- <q-search inverted v-model="search" color="none" /> -->
-    </q-toolbar>
-
-    <q-toolbar slot="footer">
-      <q-toolbar-title>
-        Footer
-      </q-toolbar-title>
-    </q-toolbar>
-
-    <div class="layout-padding">
-      <h1>Modal</h1>
-
-      <q-btn
-        color="primary"
-        v-close-overlay
-        label="Close"
-      />
-
-      <p>This is a Modal presenting a Layout.</p>
-    </div>
-  </q-modal-layout>
-</q-modal>
 </template>
 
 <script lang="ts">
+// import City from 'src/pages/City.vue';
 import { Vue, Component } from 'vue-property-decorator';
-// import { Q }
+// import { QModal } from 'quasar';
+import { City } from '../../models/models';
+// import cityService from '../../services/CityDataService';
 
-@Component
+@Component({
+  // components: {
+  //   QModal,
+  // },
+})
 export default class CityNew extends Vue {
-  showDialog: false|undefined;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  // showDialog: boolean = false;
+  private newCity: City = {
+    cityId: -1, name: '', description: '', isCapital: false, pointsOfInterest: [{ pointOfInterestId: -1, name: '', description: '' }],
+  };
+
+  /**
+   *
+   */
+  // constructor() {
+  //   super();
+  //   this.newCity = {
+  //     cityId: -1, name: '', description: '', isCapital: false, pointsOfInterest: [{ pointOfInterestId: -1, name: '', description: '' }],
+  //   };
+  // }
+
+  // created() {
+  //   this.newCity = new City(); // { name: '', description: '', isCapital: false };
+  // }
+
+  public onSubmit() {
+    this.$q.notify({
+      color: 'green-4',
+      textColor: 'white',
+      icon: 'cloud_done',
+      message: 'Submitted',
+    });
+  }
+
+  public onReset() {
+    this.newCity.name = '';
+    this.newCity.description = '';
+  }
 }
 </script>

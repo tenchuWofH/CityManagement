@@ -9,7 +9,7 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      { path: '/cities', component: () => import('pages/City.vue') },
+      { path: '/cities', component: () => import('pages/CityInfo.vue') },
     ],
   },
   // {
